@@ -15,4 +15,17 @@ public interface IUserService extends UserDetailsService {
      * @throws Exception
      */
     List<UserInfo> findAll() throws Exception;
+
+    /**
+     * @param userInfo
+     * @throws Exception
+     */
+    void save(UserInfo userInfo) throws Exception;
+
+    /**
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    UserInfo findById(String id) throws Exception;
 }

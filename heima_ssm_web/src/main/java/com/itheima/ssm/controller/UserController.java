@@ -26,8 +26,24 @@ public class UserController {
 
         ModelAndView mv = new ModelAndView();
         List<UserInfo> userList = userService.findAll();
-        mv.addObject("userlist", userList);
+        mv.addObject("userList", userList);
         mv.setViewName("users-list");
+        return mv;
+    }
+
+    @RequestMapping("/save.do")
+    public String save(UserInfo userInfo) throws Exception {
+        userService.save(userInfo);
+        return "redirect:findAll.do";
+    }
+
+
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(String id) throws Exception{
+        ModelAndView mv = new ModelAndView();
+        UserInfo userInfo = userService.findById(id);
+        mv.addObject("user",userInfo);
+        mv.setViewName("user-show");
         return mv;
     }
 }
