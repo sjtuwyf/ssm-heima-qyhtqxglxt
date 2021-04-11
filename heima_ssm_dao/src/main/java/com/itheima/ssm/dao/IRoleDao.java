@@ -1,5 +1,6 @@
 package com.itheima.ssm.dao;
 
+import com.itheima.ssm.domain.Permission;
 import com.itheima.ssm.domain.Role;
 import org.apache.ibatis.annotations.*;
 
@@ -41,4 +42,34 @@ public interface IRoleDao {
      */
     @Insert("insert into role(id,roleName,roleDesc) values(uuid_short(),#{roleName},#{roleDesc})")
     void save(Role role) throws Exception;
+
+    /**
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    @Select("select * from role where id = #{roleId}")
+    @Results({
+            @Result(property = "id",column = "id"),
+            @Result(property = "roleName",column = "roleName"),
+            @Result(property = "permissions",column = "id",javaType = java.util.List.class,many = @Many(select = "com.itheima.ssm.dao.IPermissionDao.findPermissionByRoleId"))
+    })
+    Role findById(String roleId) throws Exception;
+
+
+    /**
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    @Select("select * from permission where id not in (select permissionId from role_permission where roleId = #{roleId})")
+    List<Permission> findOtherPermissions(String roleId) throws Exception;
+
+    /**
+     * @param roleId
+     * @param permissionId
+     * @throws Exception
+     */
+    @Insert("insert into role_permission(roleId,permissionId) values(#{roleId},#{permissionId})")
+    void addPermissionToRole(@Param("roleId") String roleId, @Param("permissionId") String permissionId) throws Exception;
 }

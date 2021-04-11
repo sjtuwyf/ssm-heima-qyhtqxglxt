@@ -4,14 +4,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-  <!--<error-page>-->
-    <!--<error-code>403</error-code>-->
-    <!--<location>/pages/403.jsp</location>-->
-  <!--</error-page>-->
+  <error-page>
+    <error-code>403</error-code>
+    <location>/pages/403.jsp</location>
+  </error-page>
   <!-- 配置Spring的监听器 默认只加载WEB-INF下的applicationContext.xml-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <listener>
+      <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>  
   <!-- 设置配置文件的路径 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
